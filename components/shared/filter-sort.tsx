@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Select,
@@ -6,10 +8,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { formUrlQuery, removeKeysFromQuery } from "@/lib/url";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const FilterSort = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const handleSort = (value: string) => {
+    if (value) {
+      const newUrl = formUrlQuery({
+        params: searchParams.toString(),
+        key: "sort",
+        value: value,
+      });
+      router.push(newUrl, { scroll: false });
+    } else {
+      const newUrl = removeKeysFromQuery({
+        params: searchParams.toString(),
+        keysToRemove: ["sort"],
+      });
+      router.push(newUrl, { scroll: false });
+    }
+  };
   return (
-    <Select>
+    <Select onValueChange={(value) => handleSort(value)}>
       <SelectTrigger className="w-full sm:w-[180px]">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>

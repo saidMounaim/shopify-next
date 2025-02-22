@@ -10,7 +10,8 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const query = ((await searchParams).query as string) || "";
-  const products = await getProducts(query);
+  const sort = ((await searchParams).sort as string) || "";
+  const products = await getProducts(query, sort);
   return (
     <main className="container py-8 mx-auto">
       <h2 className="text-3xl font-bold mb-6">Products</h2>

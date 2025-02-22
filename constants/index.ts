@@ -10,3 +10,18 @@ export const currencySymbols: Record<string, string> = {
   CAD: "C$",
   AUD: "A$",
 };
+
+export const mapSortOption = (sortOption?: string) => {
+  switch (sortOption) {
+    case "price-asc":
+      return { sortKey: "PRICE", reverse: false }; // Low to High
+    case "price-desc":
+      return { sortKey: "PRICE", reverse: true }; // High to Low
+    case "name-asc":
+      return { sortKey: "TITLE", reverse: false }; // A to Z
+    case "name-desc":
+      return { sortKey: "TITLE", reverse: true }; // Z to A
+    default:
+      return { sortKey: "TITLE", reverse: false }; // Default to A to Z
+  }
+};
