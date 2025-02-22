@@ -4,8 +4,13 @@ import { getProducts } from "@/lib/actions/product.actions";
 import { ProductType } from "@/types";
 import { Suspense } from "react";
 
-export default async function Home() {
-  const products = await getProducts();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const query = ((await searchParams).query as string) || "";
+  const products = await getProducts(query);
   return (
     <main className="container py-8 mx-auto">
       <h2 className="text-3xl font-bold mb-6">Products</h2>

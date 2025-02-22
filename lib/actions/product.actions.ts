@@ -4,11 +4,11 @@ import { SHOPIFY_API_URL } from "@/constants";
 import { queryGetProducts } from "../queries/product.queries";
 import { shopifyHeaders } from "../shopify";
 
-export async function getProducts() {
+export async function getProducts(searchQuery?: string) {
   const response = await fetch(SHOPIFY_API_URL, {
     method: "POST",
     headers: shopifyHeaders,
-    body: JSON.stringify({ query: queryGetProducts }),
+    body: JSON.stringify({ query: queryGetProducts(searchQuery) }),
   });
 
   const { data } = await response.json();

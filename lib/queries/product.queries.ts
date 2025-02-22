@@ -1,7 +1,10 @@
 // query get products
-export const queryGetProducts = `
+export const queryGetProducts = (searchQuery?: string) => {
+  return `
         {
-          products(first: 10) {
+          products(first: 50, query: "${
+            searchQuery ? `title:*${searchQuery}*` : ""
+          }") {
             edges {
               node {
                 id
@@ -26,3 +29,4 @@ export const queryGetProducts = `
           }
         }
       `;
+};
