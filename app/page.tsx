@@ -1,3 +1,22 @@
-export default function Home() {
-  return <h1>Hello world!</h1>;
+import FiltersProduct from "@/components/shared/filters-product";
+import ProductCard from "@/components/shared/product-card";
+import { getProducts } from "@/lib/actions/product.actions";
+import { ProductType } from "@/types";
+import { Suspense } from "react";
+
+export default async function Home() {
+  const products = await getProducts();
+  return (
+    <main className="container py-8 mx-auto">
+      <h2 className="text-3xl font-bold mb-6">Products</h2>
+      <FiltersProduct />
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <Suspense fallback={<div>Loading...</div>}>
+          {products.map((product: ProductType) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </Suspense>
+      </div>
+    </main>
+  );
 }
